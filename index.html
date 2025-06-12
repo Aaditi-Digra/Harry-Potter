@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hogwarts Houses</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: radial-gradient(circle at center, #0a0a0a 0%, #000000 100%);
+      font-family: 'Georgia', serif;
+      color: #fff;
+      min-height: 100vh;
+      padding: 40px 20px 120px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    h1 {
+      color: gold;
+      margin-bottom: 80px;
+      font-size: 2.5rem;
+      text-shadow: 0 0 10px gold;
+      animation: glowTitle 3s ease-in-out infinite alternate, fadeIn 2s ease-in-out, bounceIn 1.2s ease-out;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+      width: 100%;
+      max-width: 1200px;
+      animation: slideUp 1.5s ease-out;
+      z-index: 2;
+    }
+
+    .house-card {
+      border-radius: 15px;
+      padding: 25px;
+      text-align: center;
+      box-shadow: 0 0 15px rgba(255, 215, 0, 0.2);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      color: white;
+      cursor: pointer;
+      transform-style: preserve-3d;
+    }
+
+    .house-card:hover {
+      transform: rotateY(10deg) translateY(-5px);
+      box-shadow: 0 0 25px rgba(255, 215, 0, 0.4);
+    }
+
+    .house-name {
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-bottom: 15px;
+      color: #fff;
+    }
+
+    .house-symbol {
+      width: 80px;
+      height: 80px;
+      margin: 10px auto;
+    }
+
+    .house-symbol img {
+      width: 100%;
+      height: 100%;
+    }
+
+    .house-desc {
+      font-size: 1rem;
+      line-height: 1.5;
+      color: #f1f1f1;
+    }
+
+    .gryffindor {
+      background: linear-gradient(135deg, #740001, #ae0001);
+    }
+
+    .slytherin {
+      background: linear-gradient(135deg, #1a472a, #2a623d);
+    }
+
+    .ravenclaw {
+      background: linear-gradient(135deg, #0e1a40, #222f5b);
+    }
+
+    .hufflepuff {
+      background: linear-gradient(135deg, #ffdb00, #ecb939);
+      color: #000;
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2rem;
+      }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes glowTitle {
+      from { text-shadow: 0 0 10px gold, 0 0 20px #ffcc00; }
+      to { text-shadow: 0 0 20px gold, 0 0 30px #ff9900; }
+    }
+
+    @keyframes bounceIn {
+      0% { transform: scale(0.8); opacity: 0; }
+      60% { transform: scale(1.05); opacity: 1; }
+      100% { transform: scale(1); }
+    }
+
+    .quote {
+      position: absolute;
+      bottom: 10px;
+      width: 100%;
+      text-align: center;
+      font-size: 1.1rem;
+      color: #aaa;
+      font-style: italic;
+      animation: fadeIn 3s ease-out;
+      z-index: 3;
+    }
+
+    .stars {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .stars span {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: white;
+      border-radius: 50%;
+      animation: twinkle 2s infinite ease-in-out;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.1; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.5); }
+    }
+
+    @keyframes shoot {
+      0% {
+        transform: translate(-100px, -100px) rotate(45deg);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      100% {
+        transform: translate(100vw, 100vh) rotate(45deg);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="stars">
+    <span style="top: 10%; left: 20%; animation-delay: 0s;"></span>
+    <span style="top: 30%; left: 70%; animation-delay: 1s;"></span>
+    <span style="top: 60%; left: 40%; animation-delay: 2s;"></span>
+    <span style="top: 80%; left: 90%; animation-delay: 1.5s;"></span>
+    <span style="top: 50%; left: 10%; animation-delay: 2.5s;"></span>
+    <span style="top: 25%; left: 85%; animation-delay: 3s;"></span>
+    <span style="top: 75%; left: 35%; animation-delay: 4s;"></span>
+    <span style="top: 90%; left: 50%; animation-delay: 5s;"></span>
+    <span style="top: 15%; left: 60%; animation-delay: 2.3s;"></span>
+    <span style="top: 5%; left: 5%; animation-delay: 1.7s;"></span>
+  </div>
+
+  <h1>Hogwarts Houses</h1>
+  <div class="grid">
+    <div class="house-card gryffindor">
+      <div class="house-symbol">
+        <img src="gry-removebg-preview.png" alt="Gryffindor Crest">
+      </div>
+      <div class="house-name">Gryffindor</div>
+      <div class="house-desc">Bravery, courage, and chivalry define the members of Gryffindor.</div>
+    </div>
+    <div class="house-card slytherin">
+      <div class="house-symbol">
+        <img src="th-removebg-preview.png" alt="Slytherin Crest">
+      </div>
+      <div class="house-name">Slytherin</div>
+      <div class="house-desc">Ambition, cunning, and resourcefulness are hallmarks of Slytherin House.</div>
+    </div>
+    <div class="house-card ravenclaw">
+      <div class="house-symbol">
+        <img src="rav-removebg-preview.png" alt="Ravenclaw Crest">
+      </div>
+      <div class="house-name">Ravenclaw</div>
+      <div class="house-desc">Intelligence, wisdom, and creativity are cherished in Ravenclaw.</div>
+    </div>
+    <div class="house-card hufflepuff">
+      <div class="house-symbol">
+        <img src="huff-removebg-preview.png" alt="Hufflepuff Crest">
+      </div>
+      <div class="house-name">Hufflepuff</div>
+      <div class="house-desc">Hard work, loyalty, and patience are the foundations of Hufflepuff House.</div>
+    </div>
+  </div>
+
+<section id="sorting-quiz" style="text-align: center; padding: 4rem 2rem; position: relative; overflow: hidden;">
+  <h2 class="quiz-heading">Hogwarts Sorting Hat Quiz</h2>
+  <div style="margin-bottom: 1.5rem;"><button id="startQuiz" class="quiz-btn">Start Sorting</button></div>
+  <div id="quizContainer" style="display: none; margin-top: 2rem;"></div>
+  <div id="quizResult" class="quiz-result"></div>
+  <div class="hogwarts-quote">"Hogwarts will always be there to welcome you home."</div>
+</section>
+
+<style>
+  body {
+    background-color: #0a0a23;
+    overflow-x: hidden;
+    font-family: 'Georgia', serif;
+  }
+
+  .quiz-heading {
+    color: gold;
+    font-size: 2rem;
+    text-shadow: 0 0 10px #ffcc00, 0 0 20px #ffcc00;
+    margin-bottom: 1.5rem;
+  }
+
+  .quiz-btn {
+    padding: 0.8rem 2rem;
+    font-size: 1.1rem;
+    background: linear-gradient(to right, #4b0082, #6a0dad);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+
+  .quiz-btn:hover {
+    background: linear-gradient(to right, #6a0dad, #4b0082);
+  }
+
+  .quiz-question {
+    animation: fadeIn 0.7s ease-in-out;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 1.5rem;
+    border-radius: 1rem;
+    margin-bottom: 1.5rem;
+    color: white;
+  }
+
+  .quiz-options button {
+    display: block;
+    width: 100%;
+    margin: 0.5rem 0;
+    padding: 0.7rem;
+    background-color: #222;
+    color: white;
+    border: 1px solid gold;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .quiz-options button:hover {
+    background-color: gold;
+    color: #000;
+  }
+
+  .quiz-result {
+    font-size: 1.8rem;
+    color: gold;
+    text-shadow: 0 0 10px gold;
+    margin-top: 2rem;
+  }
+
+  .house-card {
+    padding: 1rem;
+    margin-top: 2rem;
+    border-radius: 1rem;
+    color: white;
+    text-align: center;
+    font-weight: bold;
+    animation: fadeIn 1s ease-in-out;
+  }
+
+  .Gryffindor {
+    background-color: #7f0909;
+  }
+
+  .Ravenclaw {
+    background-color: #000a90;
+  }
+
+  .Hufflepuff {
+    background-color: #ecb939;
+    color: black;
+  }
+
+  .Slytherin {
+    background-color: #1a472a;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .stars {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    background: transparent;
+    overflow: hidden;
+  }
+
+  .star {
+    position: absolute;
+    width: 2px;
+    height: 2px;
+    background: white;
+    animation: twinkle 2s infinite ease-in-out;
+    opacity: 0.8;
+    border-radius: 50%;
+  }
+
+  @keyframes twinkle {
+    0%, 100% { opacity: 0.8; transform: scale(1); }
+    50% { opacity: 0.3; transform: scale(0.8); }
+  }
+
+  .hogwarts-quote {
+    margin-top: 3rem;
+    font-size: 1.2rem;
+    color: gold;
+     text-shadow: 0 0 10px gold;
+    font-style: italic;
+    animation: fadeIn 2s ease-in;
+  }
+</style>
+
+<div class="stars" id="stars"></div>
+
+<script>
+  const quizData = [
+    {
+      question: "What trait do you value most?",
+      answers: [
+        { text: "Bravery", house: "Gryffindor" },
+        { text: "Wisdom", house: "Ravenclaw" },
+        { text: "Loyalty", house: "Hufflepuff" },
+        { text: "Ambition", house: "Slytherin" }
+      ]
+    },
+    {
+      question: "Which class would you enjoy the most?",
+      answers: [
+        { text: "Defense Against the Dark Arts", house: "Gryffindor" },
+        { text: "Astronomy", house: "Ravenclaw" },
+        { text: "Herbology", house: "Hufflepuff" },
+        { text: "Potions", house: "Slytherin" }
+      ]
+    },
+    {
+      question: "Choose a magical creature:",
+      answers: [
+        { text: "Phoenix", house: "Gryffindor" },
+        { text: "Eagle", house: "Ravenclaw" },
+        { text: "Badger", house: "Hufflepuff" },
+        { text: "Basilisk", house: "Slytherin" }
+      ]
+    },
+    {
+      question: "Your ideal weekend is:",
+      answers: [
+        { text: "Adventuring", house: "Gryffindor" },
+        { text: "Reading books", house: "Ravenclaw" },
+        { text: "Helping friends", house: "Hufflepuff" },
+        { text: "Planning success", house: "Slytherin" }
+      ]
+    },
+    {
+      question: "Pick a color:",
+      answers: [
+        { text: "Red", house: "Gryffindor" },
+        { text: "Blue", house: "Ravenclaw" },
+        { text: "Yellow", house: "Hufflepuff" },
+        { text: "Green", house: "Slytherin" }
+      ]
+    },
+    {
+      question: "Pick a magical artifact:",
+      answers: [
+        { text: "Sword of Gryffindor", house: "Gryffindor" },
+        { text: "Diadem of Ravenclaw", house: "Ravenclaw" },
+        { text: "Cup of Hufflepuff", house: "Hufflepuff" },
+        { text: "Locket of Slytherin", house: "Slytherin" }
+      ]
+    },
+    {
+      question: "Which ghost do you like most?",
+      answers: [
+        { text: "Nearly Headless Nick", house: "Gryffindor" },
+        { text: "The Grey Lady", house: "Ravenclaw" },
+        { text: "The Fat Friar", house: "Hufflepuff" },
+        { text: "The Bloody Baron", house: "Slytherin" }
+      ]
+    }
+  ];
+
+  let currentQuestion = 0;
+  let scores = { Gryffindor: 0, Ravenclaw: 0, Hufflepuff: 0, Slytherin: 0 };
+
+  const startBtn = document.getElementById("startQuiz");
+  const quizContainer = document.getElementById("quizContainer");
+  const resultBox = document.getElementById("quizResult");
+
+  startBtn.addEventListener("click", () => {
+    startBtn.style.display = "none";
+    quizContainer.style.display = "block";
+    currentQuestion = 0;
+    scores = { Gryffindor: 0, Ravenclaw: 0, Hufflepuff: 0, Slytherin: 0 };
+    showQuestion();
+  });
+
+  function showQuestion() {
+    quizContainer.innerHTML = "";
+    resultBox.innerHTML = "";
+
+    const q = quizData[currentQuestion];
+    const questionDiv = document.createElement("div");
+    questionDiv.classList.add("quiz-question");
+    questionDiv.innerHTML = `<h3>${q.question}</h3>`;
+
+    const optionsDiv = document.createElement("div");
+    optionsDiv.className = "quiz-options";
+
+    q.answers.forEach((a) => {
+      const btn = document.createElement("button");
+      btn.innerText = a.text;
+      btn.onclick = () => {
+        scores[a.house]++;
+        currentQuestion++;
+        if (currentQuestion < quizData.length) {
+          showQuestion();
+        } else {
+          showResult();
+        }
+      };
+      optionsDiv.appendChild(btn);
+    });
+
+    questionDiv.appendChild(optionsDiv);
+    quizContainer.appendChild(questionDiv);
+  }
+
+  function showResult() {
+    quizContainer.innerHTML = "";
+    let topHouse = "";
+    let max = 0;
+    for (const house in scores) {
+      if (scores[house] > max) {
+        max = scores[house];
+        topHouse = house;
+      }
+    }
+    resultBox.innerHTML = `<div class="house-card ${topHouse}">You belong to ${topHouse}!</div>`;
+  }
+
+  // Create stars
+  const starsContainer = document.getElementById("stars");
+  for (let i = 0; i < 100; i++) {
+    const star = document.createElement("div");
+    star.classList.add("star");
+    star.style.top = `${Math.random() * 100}%`;
+    star.style.left = `${Math.random() * 100}%`;
+    star.style.animationDelay = `${Math.random() * 3}s`;
+    starsContainer.appendChild(star);
+  }
+</script>
+
+
